@@ -1,10 +1,11 @@
 # R4: Autoscaling based on 50 percent CPU utilization
+# S4: High availability with minimum two instances
 
 resource "aws_autoscaling_group" "web" {
   name             = "web-asg"
-  min_size         = 1
+  min_size         = 2
   max_size         = 4
-  desired_capacity = 1
+  desired_capacity = 2
 
   launch_template {
     id      = aws_launch_template.web.id
