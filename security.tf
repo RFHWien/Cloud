@@ -1,15 +1,17 @@
-# R5: Access restricted to company IP address
+# R5: Access restricted to company IP (ALB level)
+# S5: Only HTTP traffic allowed to web servers
 
 resource "aws_security_group" "web_sg" {
   name        = "web-sg"
-  description = "Allow HTTP access only from company IP"
+  description = "Allow only HTTP traffic from ALB to web servers"
+  vpc_id      = aws_vpc.main.id
 
   ingress {
-    description = "HTTP from company IP"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = [var.company_ip]
+    description     = "HTTP from ALB only"
+    from_port       = 80
+    to_port         = 80
+    protocol        = "tcp"
+    security_groups = [aws_security_group.alb_sg.id]
   }
 
   egress {
