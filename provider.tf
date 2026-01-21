@@ -7,6 +7,7 @@ terraform {
   }
 }
 
+# R2: Region isolation via configurable AWS region
 provider "aws" {
   region = var.region
 }
